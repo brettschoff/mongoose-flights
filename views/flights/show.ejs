@@ -1,0 +1,56 @@
+    <%- include('../partials/header') %>
+    <h2>Flight Details:</h2>
+    <section id="show-flights">
+        <div id="flight-details">
+            <div>Airline: <%= flights.airline %></div>
+            <div>Airport: <%= flights.airport %></div>
+            <div>Flight Number: <%= flights.flightNo %></div>
+            <div>Departs: <%= flights.departs %></div>
+            <h4 id="stops">Stops:</h4>
+            <div>
+                <% destinations.forEach(d => { %>
+                <div><%= d.airport %> <%= d.arrival.toLocaleString() %></div>
+                <% }) %>
+            </div>
+        </div>
+    </section>
+    <br>
+    <h2 id="ticket">Tickets</h2>
+    <Table>
+        <thead>
+            <th>Seat</th>
+            <th>price</th>
+        </thead>
+        <tbody>
+            <% ticket.forEach(t => { %>
+                <tr>
+                <td><%= t.seat %></td>
+                <td><%= t.price %></td>
+                <td>
+                    <form action="/tickets/<%= t._id %>?_method=DELETE" method="POST" id="delete-ticket">
+                    <input type="submit" value="Delete">
+                    </form>
+                </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </Table>
+    <a href="/flights/<%= flights._id %>/tickets/new" id="ticket-button">Create Ticket</a>
+    <br><br>
+    <h2 id="destination">Add Destinations</h2>
+    <form action="/flights/<%= flights._id %>/destinations" method="POST" id="add-destination-form">
+    <label>Destination:</label>
+    <select name="airport">
+        <option value="AUS">AUS</option>
+        <option value="DFW">DFW</option>
+        <option value="DEN">DEN</option>
+        <option value="LAX">LAX</option>
+        <option value="SAN">SAN</option>
+    </select>
+    <label>Arrival:</label>
+    <input type="datetime-local" name="arrival">
+    <button type="submit">Add Destination</button>
+    </form>
+
+</body>
+</html>
